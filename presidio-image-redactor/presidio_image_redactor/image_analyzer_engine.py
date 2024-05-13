@@ -41,7 +41,7 @@ class ImageAnalyzerEngine:
         self.image_preprocessor = image_preprocessor
 
     def analyze(
-        self, image: object, ocr_kwargs: Optional[dict] = None, **text_analyzer_kwargs
+        self, image: object, ocr_kwargs: Optional[dict] = None, redact_type: str = "ALL", **text_analyzer_kwargs
     ) -> List[ImageRecognizerResult]:
         """Analyse method to analyse the given image.
 
@@ -73,8 +73,11 @@ class ImageAnalyzerEngine:
         # Difines English as default language, if not specified
         if "language" not in text_analyzer_kwargs:
             text_analyzer_kwargs["language"] = "en"
+        
+        entities = None if redact_type == "ALL" else [redact_type]
+        
         analyzer_result = self.analyzer_engine.analyze(
-            text=text, **text_analyzer_kwargs
+            text=text, entities=entities, **text_analyzer_kwargs
         )
         allow_list = self._check_for_allow_list(text_analyzer_kwargs)
         bboxes = self.map_analyzer_results_to_bounding_boxes(

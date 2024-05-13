@@ -2,6 +2,7 @@ import pytesseract
 
 from presidio_image_redactor import OCR
 
+pytesseract.pytesseract.tesseract_cmd = r'/opt/homebrew/bin/tesseract'
 
 class TesseractOCR(OCR):
     """OCR class that performs OCR on a given image."""

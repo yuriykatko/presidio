@@ -28,6 +28,7 @@ class ImageRedactorEngine:
         self,
         image: Image,
         fill: Union[int, Tuple[int, int, int]] = (0, 0, 0),
+        redact_type: str = "ALL",
         ocr_kwargs: Optional[dict] = None,
         ad_hoc_recognizers: Optional[List[PatternRecognizer]] = None,
         **text_analyzer_kwargs,
@@ -58,6 +59,7 @@ class ImageRedactorEngine:
             bboxes = self.image_analyzer_engine.analyze(
                 image,
                 ocr_kwargs=ocr_kwargs,
+                redact_type = redact_type,
                 **text_analyzer_kwargs,
             )
         else:

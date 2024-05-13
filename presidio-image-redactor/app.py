@@ -62,7 +62,8 @@ class Server:
 
             elif request.files and "image" in request.files:
                 im = Image.open(request.files.get("image"))
-                redacted_image = self.engine.redact(im, color_fill, score_threshold=0.4)
+                redact_type = params.get("redact_type")
+                redacted_image = self.engine.redact(im, color_fill, redact_type)
                 img_byte_arr = image_to_byte_array(redacted_image, im.format)
                 return Response(img_byte_arr, mimetype="application/octet-stream")
             else:
